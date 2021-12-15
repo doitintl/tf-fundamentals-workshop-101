@@ -203,19 +203,13 @@ With this lab we learned the basics of setting up, planning and provisioning sim
 ## Links
 
 - https://blog.gruntwork.io/a-comprehensive-guide-to-managing-secrets-in-your-terraform-code-1d586955ace1
-- https://github.com/cloudposse/terraform-null-label/blob/master/README.md
-- https://github.com/terraform-aws-modules/terraform-aws-vpc
-- https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html
-- https://www.terraform.io/docs/providers/aws/r/security_group.html
-- https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html
-- https://www.terraform.io/docs/providers/aws/r/ssm_activation.html
-- https://www.terraform.io/docs/providers/aws/r/iam_role.html
-- https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
-- https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
+  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance
+- https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
+- https://github.com/cloudposse/terraform-aws-rds
+- https://aws.amazon.com/de/rds/instance-types/
 - https://www.terraform.io/docs/language/state/index.html
 - https://www.terraform.io/docs/language/functions/cidrsubnet.html
-- https://aws.amazon.com/ec2/instance-types/t2/
-- https://wiki.centos.org/Cloud/AWS
+  
 
 
 ## License
