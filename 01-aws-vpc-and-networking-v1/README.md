@@ -192,7 +192,7 @@ You can also create the test environment by creating the corresponding workspace
    
 ## Conclusion
 
-With this lab we learned the basics of `setting up, planning and provisioning simple aws resources using the example of a VPC with 6 subnets and 2 security groups. We will build up the other labs based on this lab and use parts of the approaches and resources explained here in them as well.
+With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of a VPC with 6 subnets and 2 security groups. We will build up the other labs based on this lab and use parts of the approaches and resources explained here in them as well. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
 
 
 ## Links
