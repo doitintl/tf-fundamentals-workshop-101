@@ -78,17 +78,10 @@ module "doit_svc_compute_ec2_backend_centos_9" {
 locals {
   backend_user_data = <<-USERDATA
     #!/bin/bash
-    yum update && \
-    cd /tmp ;
-    yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+    cd /tmp ; yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm && \
+    yum -y install mc curl wget git && yum clean all
     systemctl enable amazon-ssm-agent
     systemctl start amazon-ssm-agent
     hostnamectl set-hostname doit-ec2-backend-${var.set_instance_grp_num}-${random_id.ec2_random_hostname_suffix.hex}
   USERDATA
 }
-
-/*
-    yum upgrade -y && \
-    yum -y install mc curl wget git && \
-    yum clean all ;
-*/
