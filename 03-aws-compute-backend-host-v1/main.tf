@@ -64,7 +64,7 @@ module "doit_core_vpc" {
     cidrsubnet(local.vpc_cidr, 4, 2), // --'
   ]
 
-  vpc_private_subnets_natgw_enabled = false
+  vpc_private_subnets_natgw_enabled = true
   vpc_private_subnet_tags           = merge(module.core_label.tags, { "Name" = "${module.core_label.stage}-${module.core_label.namespace}-${module.core_label.name}-sn-private", "tf_resource" = "SN_PRIV" })
   vpc_private_subnets = [
     cidrsubnet(local.vpc_cidr, 4, 3), // --| used for private apps
@@ -141,7 +141,7 @@ module "doit_core_ssm" {
 }
 
 # --
-# @info:         1st ec2-backend-instance [001/001]
+# @info:         1st ec2-backend-instance-group [001/001] -> [3] instances desired
 # @entity/id:    doit_core_ec2_backend_host_centos_9
 # @source/local: aws/modules/project/services/ec2-backend
 # --
@@ -153,9 +153,9 @@ module "doit_core_ec2_backend_host_centos_9" {
   stage     = module.core_label.stage
   namespace = module.core_label.namespace
 
-  set_size_max                 = 1
-  set_size_min                 = 1
-  set_size_desired             = 1
+  set_size_max                 = 3
+  set_size_min                 = 3
+  set_size_desired             = 3
   set_instance_type            = var.ec2_backend_instance_type
   set_instance_ami_id_centos_9 = var.ec2_backend_instance_centos_9_ami
 
@@ -178,6 +178,12 @@ module "doit_core_ec2_backend_host_centos_9" {
     "tf_resource" = "doit_ws_ec2_backend"
     "tf_scope"    = "workshop"
   })
+
+  set_vpc_id = local.vpc_id
+  set_region = local.aws_region
+  set_security_groups_ssm = [
+    module.doit_core_sec_groups.sec_grp_host_web_app_public
+  ]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

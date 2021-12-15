@@ -39,8 +39,23 @@ variable "set_subnets_app" {
   type        = list(string)
 }
 
+variable "set_vpc_id" {
+  type        = string
+  description = "vpc id"
+}
+
+variable "set_region" {
+  type        = string
+  description = "region"
+}
+
 variable "set_security_groups" {
   description = "active security groups for this ASG"
+  type        = list(string)
+}
+
+variable "set_security_groups_ssm" {
+  description = "active security groups for this ssm"
   type        = list(string)
 }
 
