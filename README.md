@@ -34,7 +34,7 @@ In this full-day workshop we will look at some core mechanisms of Terraform. Thi
 | [tf-aws-lab-01](./01-aws-vpc-and-security-groups)   | simple aws vpc/networking example using native terraform hcl                        |
 | [tf-aws-lab-02](./02-aws-compute-ha-bastion-host) | advanced ec2 compute bastion-host example using ubuntu ec2 with user data           |
 | [tf-aws-lab-03](./03-aws-compute-ha-backend-host) | auto scaling group example for centos ec2 backend host(s) with additional user data |
-| [tf-aws-lab-04](./04-aws-rds-mysql-sa-single-zone)   | single zone aws rds example using mysql                                             |
+| [tf-aws-lab-04](./04-aws-rds-mysql57-single-zone)   | single zone aws rds example using mysql                                             |
 | [tf-aws-lab-05](./05-aws-rds-pgsql-ra-multi-zone) | multi-zone aws rds example using postgresql                                         |
 
 

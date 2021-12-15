@@ -105,7 +105,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    # jump into this lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # prepare terraform (e.g. all required plugins will downloaded, state will be prepared)
    $ terraform init ;
    # init our production workspace now (this will also activate the workspace immediately)
@@ -124,7 +124,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
    $ terraform plan -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    ```
@@ -135,7 +135,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
    $ terraform apply -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your apply-command
@@ -147,7 +147,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your destroy-command
@@ -163,7 +163,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # init our staging workspace now (this will also activate the workspace immediately)
    $ terraform workspace new stage ;
    # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
@@ -176,7 +176,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/stage.tfvars.json ;
    ```
@@ -187,7 +187,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/04-aws-rds-mysql-sa-single-zone ;
+   $ cd <root-repo-path>/04-aws-rds-mysql57-single-zone ;
    # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/stage.tfvars.json ;
    ```
