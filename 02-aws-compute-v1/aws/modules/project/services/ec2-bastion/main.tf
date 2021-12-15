@@ -35,7 +35,7 @@ module "doit_svc_compute_ec2_bastion_ubuntu_20_04" {
   wait_for_capacity_timeout   = "5m"
   associate_public_ip_address = true
 
-  user_data_base64             = base64encode(local.worker_user_data)
+  user_data_base64             = base64encode(local.bastion_user_data)
   autoscaling_policies_enabled = false
   protect_from_scale_in        = false
   asg_name_prefix              = var.set_asg_name_prefix
@@ -85,12 +85,10 @@ data "aws_ami" "ubuntu_linux_20_04" {
 
 # https://www.terraform.io/docs/configuration/expressions.html#string-literals
 locals {
-  worker_user_data = <<-USERDATA
-    # --- install additional tools and packages
+  bastion_user_data = <<-USERDATA
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get -y install mc curl wget git apt-transport-https ca-certificates
-    # --- set hostname (worker-n)
+    apt-get -y install mc curl wget git apt-transport-https ca-certificates && \
     hostnamectl set-hostname doit-ec2-bastion-${var.set_instance_grp_num}
   USERDATA
 }
