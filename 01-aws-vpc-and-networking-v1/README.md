@@ -160,6 +160,7 @@ With this lab we learned the basics of setting up, planning and provisioning sim
 - https://www.terraform.io/docs/providers/aws/r/security_group.html
 - https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html
 - https://www.terraform.io/docs/language/state/index.html
+- https://www.terraform.io/docs/language/functions/cidrsubnet.html
 
 
 ## License
