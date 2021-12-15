@@ -9,6 +9,21 @@
 
 In this full-day workshop we will look at some core mechanisms of Terraform. The beginner course will mainly deal with AWS resources in the context of VPC/Networking, Scalable EC2 Instances and relational databases. The present topics are not yet fully formulated - therefore, changes within the respective labs may occur or new labs may be added in the future. The labs assume functional access to an AWS account and a consistent toolset in the local development environment). The introduction to each topic will take about 5-10 minutes, the exercises about 30-45 minutes each.
 
+## Repository Structure
+
+``` 
+[root]
+  |
+  └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/sg resources with local state
+  └ 02-aws-compute-and-scale-v1    | 2nd terraform lab, handling compute resources with local state
+  └ 03-aws-rds-pgsql-single-zone   | 3rd terraform lab, handling rds/pgsql resources with local state (single-zone)
+  └ 04-aws-rds-pgsql-multi-zone-ha | 4th terraform lab, handling rds/pgsql resources with local state (multi-zone)
+  |--------------------------------|-----------------------------------------------------------------------------------
+  └ logs                           | target for upcoming logs (mostly terratest/api-call result related) 
+  |--------------------------------|-----------------------------------------------------------------------------------
+  └ scripts                        | target for upcoming helper scripts for all of our labs + tf init 
+  |--------------------------------|-----------------------------------------------------------------------------------
+```
 
 ## Available Labs
 
