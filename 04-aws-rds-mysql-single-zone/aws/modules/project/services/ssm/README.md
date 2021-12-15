@@ -1,0 +1,1 @@
+# AWS SSM Module for our Example-Application & Infrastructure

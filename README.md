@@ -17,7 +17,7 @@ In this full-day workshop we will look at some core mechanisms of Terraform. Thi
   └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/sg resources with local state
   └ 02-aws-compute-bastion-host-v1 | 2nd terraform lab, handling ec2 compute resources with local state
   └ 03-aws-compute-backend-host-v1 | 3rd terraform lab, handling scalable ec2 compute resources with local state
-  └ 04-aws-rds-pgsql-single-zone   | 4th terraform lab, handling rds/pgsql resources with local state (single-zone)
+  └ 04-aws-rds-mysql-single-zone   | 4th terraform lab, handling rds/mysql resources with local state (single-zone)
   └ 05-aws-rds-pgsql-multi-zone-ha | 5th terraform lab, handling rds/pgsql resources with local state (multi-zone)
   |--------------------------------|-----------------------------------------------------------------------------------
   └ logs                           | target for upcoming logs (mostly terratest/api-call result related) 
@@ -30,10 +30,10 @@ In this full-day workshop we will look at some core mechanisms of Terraform. Thi
 
 | Lab/Folder                                        | Description                                                                         |
 | ------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| [tf-aws-lab-01](./01-aws-vpc-and-networking-v1)   | simple aws vpc/networking example using native terraform hcl                        |
-| [tf-aws-lab-02](./02-aws-compute-bastion-host-v1) | advanced ec2 compute bastion-host example using ubuntu ec2 with user data           |
-| [tf-aws-lab-03](./03-aws-compute-backend-host-v1) | auto scaling group example for centos ec2 backend host(s) with additional user data |
-| [tf-aws-lab-04](./04-aws-rds-pgsql-single-zone)   | single zone aws rds example using postgresql                                        |
+| [tf-aws-lab-01](./01-aws-vpc-and-networking)   | simple aws vpc/networking example using native terraform hcl                        |
+| [tf-aws-lab-02](./02-aws-compute-bastion-host) | advanced ec2 compute bastion-host example using ubuntu ec2 with user data           |
+| [tf-aws-lab-03](./03-aws-compute-backend-host) | auto scaling group example for centos ec2 backend host(s) with additional user data |
+| [tf-aws-lab-04](./04-aws-rds-mysql-single-zone)   | single zone aws rds example using mysql                                             |
 | [tf-aws-lab-05](./05-aws-rds-pgsql-multi-zone-ha) | multi-zone aws rds example using postgresql                                         |
 
 

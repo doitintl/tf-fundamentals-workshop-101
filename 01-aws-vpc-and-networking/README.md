@@ -1,52 +1,46 @@
-# Terraform Lab-02, EC2 Bastion-Host (HA) Example 
+# Terraform Lab-01, AWS VPC/Networking Example
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
-[![EC2-OS](https://img.shields.io/badge/EC2%20OS-ubuntu2004-ff9900.svg)](#)
 
 
 ## Introduction
 
-In this lab, we build a high-available EC2 Bastion-Host system based on UBUNTU 20.04 LTS (as part of a 1-1-1 autoscaling group) and a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, two security groups for public and private subnet http/https/ssh-access are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
+In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, two security groups are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
 
 ## Terraform Module-/Repository Structure
-
-``` 
+```
 [aws]
-  |
-  └ modules                 | primary module definitons
-  |   └ global              | [global/] modules (could also be handled as GIT-SubModules)
-  |   |   └ core            | [global/core] modules (helper modules) 
-  |   |   |   └ label       | [global/core/label] primary label module logic 
-  |   |   └ network         | [global/network] modules
-  |   |   |   └ vpc         | [global/network/vpc] vpc/routing helper module
-  |   |   └ services        | [global/service] modules
-  |   |       └ ec2-asg     | [global/service/ec2-asg] ec2 autoscaling core module
-  |   |                     |
-  |   └ project             | [project/] modules
-  |   |   └ network         | [project/network] project related network modules
-  |   |   |   └ sg          | [project/network/security-groups] security group related code
-  |   |   └ services        | [project/service] related service modules
-  |   |   |   └ ssm         | [project/service/ssm] ssm parameter module
-  |   |   |   └ iam         | [project/service/iam] iam module for handling ec2/rds related configuration
-  |   |   |   └ ec2-bastion | [project/service/ec2] our bastion host (inside AWS-ASG (1/1/1)
-  |   |   |                 |
-  |---+---+-----------------|-----------------------------------------------------------------------------------
-  └ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc) 
-  |-------------------------|-----------------------------------------------------------------------------------
-  |                         |
-[meta]                      | meta directory (used for docs, media files and local helper scripta)
-  |                         |
-  └ doc                     | [meta/doc] documentation sub-directory
-  |   └ pdf                 | [meta/doc/pdf] directory
-  |   └ scm                 | [meta/doc/scm] directory
-  |       └ media           | [meta/doc/scm/media] markdown screenshots directory
-  |                         |
-  └ script                  | [meta/script] local script-/tool-directory
-  |                         |
-  |-------------------------|-----------------------------------------------------------------------------------
+|
+└ modules                 | primary module definitons
+|   └ global              | [global/] modules (could also be handled as GIT-SubModules)
+|   |   └ core            | [global/core] modules (helper modules)
+|   |   |   └ label       | [global/core/label] primary label module logic
+|   |   └ network         | [global/network] modules
+|   |   |   └ vpc         | [global/network/vpc] vpc/routing helper module
+|   |                     |
+|   └ project             | [project/] modules
+|   |   └ network         | [project/network] project related network modules
+|   |   |   └ sg          | [project/network/security-groups] security group related code
+|   |   └ services        | [project/service] related service modules
+|   |   |   └ ssm         | [project/service/ssm] ssm parameter module
+|   |   |                 |
+|---+---+-----------------|-----------------------------------------------------------------------------------
+└ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc)
+|-------------------------|-----------------------------------------------------------------------------------
+|                         |
+[meta]                    | meta directory (used for docs, media files and local helper scripta)
+|                         |
+└ doc                     | [meta/doc] documentation sub-directory
+|   └ pdf                 | [meta/doc/pdf] directory
+|   └ scm                 | [meta/doc/scm] directory
+|       └ media           | [meta/doc/scm/media] markdown screenshots directory
+|                         |
+└ script                  | [meta/script] local script-/tool-directory
+|                         |
+|-------------------------|-----------------------------------------------------------------------------------
 ```
 
 
@@ -61,14 +55,12 @@ In this lab, we build a high-available EC2 Bastion-Host system based on UBUNTU 2
 
 ## AWS Resources Used
 
-| AWS Resource        | Terraform Definition                                                                     | Module Path                                |
-| ------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------ |
-| Labels              | [terraform-null-label](https://github.com/cloudposse/terraform-null-label) | [link](./aws/modules/global/core/label) |
-| VPC                 | [terraform-aws-vpc](https://github.com/terraform-aws-modules/terraform-aws-vpc) | [link](./aws/modules/global/network/vpc) |
-| SecurityGroup       | [terraform-aws-security-group](https://www.terraform.io/docs/providers/aws/r/security_group.html) | [link](./aws/modules/project/network/sg) |
-| SSM-Parameter       | [terraform-aws-ssm-parameter](https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html) | [link](./aws/modules/project/services/ssm) |
-| IAM-Roles/Policies  | [terraform-aws-iam-role](https://www.terraform.io/docs/providers/aws/r/iam_role.html) | [link](./aws/modules/project/services/iam) |
-| AutoScalingGroup    | [terraform-aws-autoscaling-group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html) | [link](./aws/modules/global/services/ec2-asg) |
+| AWS Resource   | Terraform Definition                                                                     | Module Path                                |
+| -------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------ |
+| Labels         | [terraform-null-label](https://github.com/cloudposse/terraform-null-label) | [link](./aws/modules/global/core/label) |
+| VPC            | [terraform-aws-vpc](https://github.com/terraform-aws-modules/terraform-aws-vpc) | [link](./aws/modules/global/network/vpc) |
+| SecurityGroup  | [terraform-aws-security-group](https://www.terraform.io/docs/providers/aws/r/security_group.html) | [link](./aws/modules/project/network/sg) |
+| SSM-Parameter  | [terraform-aws-ssm-parameter](https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html) | [link](./aws/modules/project/services/ssm) |
 
 
 ## Core Requirements
@@ -108,7 +100,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    # jump into this lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # prepare terraform (e.g. all required plugins will downloaded, state will be prepared)
    $ terraform init ;
    # init our production workspace now (this will also activate the workspace immediately)
@@ -127,7 +119,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
    $ terraform plan -var-file=env/prod.tfvars.json ;
    ```
@@ -138,7 +130,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your apply-command
@@ -150,7 +142,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your destroy-command
@@ -166,7 +158,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # init our staging workspace now (this will also activate the workspace immediately)
    $ terraform workspace new stage ;
    # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
@@ -179,7 +171,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/stage.tfvars.json ;
    ```
@@ -190,7 +182,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-bastion-host-v1 ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking ;
    # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/stage.tfvars.json ;
    ```
@@ -200,23 +192,17 @@ You can also create the test environment by creating the corresponding workspace
    
 ## Conclusion
 
-With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of an auto-scaled high-available EC2 bastion-host. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
+With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of a VPC with 6 subnets and 2 security groups. We will build up the other labs based on this lab and use parts of the approaches and resources explained here in them as well. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
 
 
 ## Links
 
 - https://github.com/cloudposse/terraform-null-label/blob/master/README.md
 - https://github.com/terraform-aws-modules/terraform-aws-vpc
-- https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html
 - https://www.terraform.io/docs/providers/aws/r/security_group.html
 - https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html
-- https://www.terraform.io/docs/providers/aws/r/ssm_activation.html
-- https://www.terraform.io/docs/providers/aws/r/iam_role.html
-- https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
-- https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
 - https://www.terraform.io/docs/language/state/index.html
 - https://www.terraform.io/docs/language/functions/cidrsubnet.html
-- https://aws.amazon.com/ec2/instance-types/t2/
 
 
 ## License

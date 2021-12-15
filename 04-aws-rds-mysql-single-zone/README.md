@@ -1,15 +1,14 @@
-# Terraform Lab-03, 3x EC2 Backend-Hosts (HA) Example 
+# Terraform Lab-04, AWS RDS MySQL Single-Zone Example
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
-[![EC2-OS](https://img.shields.io/badge/EC2%20OS-centos9-ff9900.svg)](#)
 
 
 ## Introduction
 
-In this lab, we build a high-available EC2 Backend-Host system based on the latest CentOS Stream-9 Linux-distribution (as part of a 3-3-3 ha-autoscaling group) and a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, four security groups for public and private subnet icmp/http/https/ssh-access are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
+In this lab, we build a simple RDS MySQL 5.7.17 internal database system and a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, four security groups for public and private subnet icmp/http/https/ssh-access are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
 
 ## Terraform Module-/Repository Structure
 
@@ -22,8 +21,6 @@ In this lab, we build a high-available EC2 Backend-Host system based on the late
   |   |   |   └ label       | [global/core/label] primary label module logic 
   |   |   └ network         | [global/network] modules
   |   |   |   └ vpc         | [global/network/vpc] vpc/routing helper module
-  |   |   └ services        | [global/service] modules
-  |   |       └ ec2-asg     | [global/service/ec2-asg] ec2 autoscaling core module
   |   |                     |
   |   └ project             | [project/] modules
   |   |   └ network         | [project/network] project related network modules
@@ -31,7 +28,7 @@ In this lab, we build a high-available EC2 Backend-Host system based on the late
   |   |   └ services        | [project/service] related service modules
   |   |   |   └ ssm         | [project/service/ssm] ssm parameter module
   |   |   |   └ iam         | [project/service/iam] iam module for handling ec2/rds related configuration
-  |   |   |   └ ec2-backend | [project/service/ec2] our backend host (inside AWS-ASG (1/1/1)
+  |   |   |   └ rds         | [project/service/rds] our rds resource stack definition module
   |   |   |                 |
   |---+---+-----------------|-----------------------------------------------------------------------------------
   └ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc) 
@@ -108,7 +105,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    # jump into this lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # prepare terraform (e.g. all required plugins will downloaded, state will be prepared)
    $ terraform init ;
    # init our production workspace now (this will also activate the workspace immediately)
@@ -127,9 +124,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
-   $ terraform plan -var-file=env/prod.tfvars.json ;
+   $ terraform plan -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    ```
 
 2. **APPLY** Production Environment
@@ -138,9 +135,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
-   $ terraform apply -var-file=env/prod.tfvars.json ;
+   $ terraform apply -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your apply-command
    ```
 
@@ -150,9 +147,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
-   $ terraform destroy -var-file=env/prod.tfvars.json ;
+   $ terraform destroy -var="rds_db_user=set-your-db-username" -var="rds_db_pwd=set-your-db-password" -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your destroy-command
    ```
 
@@ -166,7 +163,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # init our staging workspace now (this will also activate the workspace immediately)
    $ terraform workspace new stage ;
    # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
@@ -179,7 +176,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/stage.tfvars.json ;
    ```
@@ -190,7 +187,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
+   $ cd <root-repo-path>/04-aws-rds-mysql-single-zone ;
    # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/stage.tfvars.json ;
    ```
@@ -205,6 +202,7 @@ With this lab we learned the basics of setting up, planning and provisioning sim
 
 ## Links
 
+- https://blog.gruntwork.io/a-comprehensive-guide-to-managing-secrets-in-your-terraform-code-1d586955ace1
 - https://github.com/cloudposse/terraform-null-label/blob/master/README.md
 - https://github.com/terraform-aws-modules/terraform-aws-vpc
 - https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html
