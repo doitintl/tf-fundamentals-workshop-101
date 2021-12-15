@@ -1,4 +1,4 @@
-# Terraform Lab-01, AWS VPC and Networking Example
+# Terraform Lab-01, AWS VPC/Networking Example
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
@@ -31,7 +31,7 @@ In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3
 └ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc)
 |-------------------------|-----------------------------------------------------------------------------------
 |                         |
-[meta]                      | meta directory (used for docs, media files and local helper scripta)
+[meta]                    | meta directory (used for docs, media files and local helper scripta)
 |                         |
 └ doc                     | [meta/doc] documentation sub-directory
 |   └ pdf                 | [meta/doc/pdf] directory
