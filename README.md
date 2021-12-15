@@ -1,6 +1,7 @@
 # Terraform Fundamentals 101
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Lab-Version](https://img.shields.io/badge/Labs%20core%20version-1.0.0-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
 
@@ -78,7 +79,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 2. **AWS Credential Configuration**
 
-   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `<lab-path>/env/<workspace>.tfvars.json`. Below you can find an example for the user `1001` with the profile `tf-ws-user-1001`._
+   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `<lab-path>/env/<workspace>.tfvars.json`. Below you can find an _example_ for the user `1001` with the profile `tf-ws-user-1001`._
 
    ```ini
    $ # $HOME/.aws/config
@@ -91,7 +92,7 @@ The preparation of your local shell/terminal environment is one of the first ste
    $ # $HOME/.aws/credentials
    [tf-ws-user-1001]
    aws_access_key_id = AKIA0000000000000000
-   aws_secret_access_key = 0000000000000000000000000000000000000001
+   aws_secret_access_key = 0000000000000000000000000000000000000000
    ```
 
 3. **INIT/RUN** Lab
