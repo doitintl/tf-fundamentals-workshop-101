@@ -115,7 +115,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 The life cycle of our infrastructure will essentially depend on three important terraform commands (`plan`, `apply` and `destroy`). In the course of an automated approach, e.g. via well-known build tools such as Gitlab or Jenkins, these commands can also be used. In this case, the output of the `terraform plan` command is usually used as input for the actual provisioning call `apply`. The advantage here is that the plan is available as a physical file and is not subject to any runtime restrictions with regard to any timeouts in the user request.
 
-1. **PLAN**
+1. **PLAN** Production Environment
 
    _Now that all terraform plugins required for the provisioning process have been loaded and the workspace has been initialized, we can begin our initial infrastructure planning._
 
@@ -126,7 +126,7 @@ The life cycle of our infrastructure will essentially depend on three important 
    $ echo 'terraform plan -var-file=env/prod.tfvars.json' ;
    ```
 
-2. **APPLY**
+2. **APPLY** Production Environment
 
    _The next step will be the actual execution of provisioning. for this we could also use the output of the provisioning plan from step 1, but for simplicity we will go directly into the apply process based on our infrastructure definition._
 
@@ -137,7 +137,7 @@ The life cycle of our infrastructure will essentially depend on three important 
    $ echo 'terraform apply -var-file=env/prod.tfvars.json' ;
    ```
 
-3. **DESTROY**
+3. **DESTROY** Production Environment
 
    _The last step will be the removal of the created resources. All resources defined via the infrastructure definition will be removed completely and without residue from your aws account._
 
