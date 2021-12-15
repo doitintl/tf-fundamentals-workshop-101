@@ -17,17 +17,17 @@ variable "aws_profile" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 variable "init_name" {
-  default = "aws-tf-lab-01"
+  default     = "aws-tf-lab-01"
   description = "the initial name for this stack used within all modules as basic tag/label source"
 }
 
 variable "init_name_long" {
-  default = "aws-vpc-net-example-lab-01"
+  default     = "aws-vpc-net-example-lab-01"
   description = "the initial name for this stack used within all modules as basic tag/label source"
 }
 
 variable "init_namespace" {
-  default = "doit"
+  default     = "doit"
   description = "the initial namespace for this stack used within all modules as basic tag/label source"
 }
 
@@ -49,7 +49,7 @@ variable "ec2_bastion_storage_root_type" {
 }
 
 variable "ec2_bastion_storage_root_allocated" {
-  type = number
+  type        = number
   description = "EC2 RootDisk storage allocation size in GiB"
 }
 

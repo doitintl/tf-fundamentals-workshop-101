@@ -153,10 +153,10 @@ module "doit_core_ec2_backend_host_centos_9" {
   stage     = module.core_label.stage
   namespace = module.core_label.namespace
 
-  set_size_max      = 1
-  set_size_min      = 1
-  set_size_desired  = 1
-  set_instance_type = var.ec2_backend_instance_type
+  set_size_max                 = 1
+  set_size_min                 = 1
+  set_size_desired             = 1
+  set_instance_type            = var.ec2_backend_instance_type
   set_instance_ami_id_centos_9 = var.ec2_backend_instance_centos_9_ami
 
   set_root_volume_size = var.ec2_backend_storage_root_allocated
@@ -164,13 +164,13 @@ module "doit_core_ec2_backend_host_centos_9" {
 
   set_iam_instance_profile = module.doit_core_iam.app_ec2_iam_profile
   set_security_groups = [
-    module.doit_core_sec_groups.sec_grp_host_web_app_public,
-    module.doit_core_sec_groups.sec_grp_host_ssh_app_public,
+    module.doit_core_sec_groups.sec_grp_host_web_app_private,
+    module.doit_core_sec_groups.sec_grp_host_ssh_app_private,
   ]
 
-  set_subnets_app       = local.vpc_subnet_ids_pub
-  set_instance_grp_num  = "01"
-  set_asg_name_prefix   = "${module.core_label.name}-svc-01-"
+  set_subnets_app      = local.vpc_subnet_ids_priv
+  set_instance_grp_num = "01"
+  set_asg_name_prefix  = "${module.core_label.name}-svc-01-"
 
   attributes = module.core_label.attributes
   tags = merge(module.core_label.tags, {

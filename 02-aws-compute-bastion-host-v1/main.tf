@@ -167,9 +167,9 @@ module "doit_core_ec2_bastion_host_ubuntu_20_04" {
     module.doit_core_sec_groups.sec_grp_host_allow_icmp_ping_public
   ]
 
-  set_subnets_app       = local.vpc_subnet_ids_pub
-  set_instance_grp_num  = "01"
-  set_asg_name_prefix   = "${module.core_label.name}-sec-01-"
+  set_subnets_app      = local.vpc_subnet_ids_pub
+  set_instance_grp_num = "01"
+  set_asg_name_prefix  = "${module.core_label.name}-sec-01-"
 
   attributes = module.core_label.attributes
   tags = merge(module.core_label.tags, {

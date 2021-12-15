@@ -18,6 +18,68 @@ module "label" {
 }
 
 # --
+# @entity/id:    aws_security_group/sec_grp_host_ssh_app_public (public ssh access)
+# @source/doc:   https://www.terraform.io/docs/providers/aws/r/security_group.html
+# @source/local: *
+# --
+resource "aws_security_group" "sec_grp_host_ssh_app_public" {
+
+  name        = "instance_ssh_public"
+  description = "public ssh application security group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(module.label.tags, {
+    "Name"     = "${terraform.workspace}-secgrp-ssh-ext"
+    "resource" = "SG/SSH/EXT"
+  })
+}
+
+# --
+# @entity/id:    aws_security_group/sec_grp_host_ssh_app_private (public ssh access)
+# @source/doc:   https://www.terraform.io/docs/providers/aws/r/security_group.html
+# @source/local: *
+# --
+resource "aws_security_group" "sec_grp_host_ssh_app_private" {
+
+  name        = "instance_ssh_private"
+  description = "private ssh application security group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(module.label.tags, {
+    "Name"     = "${terraform.workspace}-secgrp-ssh-int"
+    "resource" = "SG/SSH/INT"
+  })
+}
+
+# --
 # @entity/id:    aws_security_group/sec_grp_host_web_app_private (internal http/https-apps)
 # @source/doc:   https://www.terraform.io/docs/providers/aws/r/security_group.html
 # @source/local: *
@@ -52,37 +114,6 @@ resource "aws_security_group" "sec_grp_host_web_app_private" {
   tags = merge(module.label.tags, {
     "Name"     = "${terraform.workspace}-secgrp-web-int"
     "resource" = "SG/WEB/INT"
-  })
-}
-
-# --
-# @entity/id:    aws_security_group/sec_grp_host_ssh_app_public (public ssh access)
-# @source/doc:   https://www.terraform.io/docs/providers/aws/r/security_group.html
-# @source/local: *
-# --
-resource "aws_security_group" "sec_grp_host_ssh_app_public" {
-
-  name        = "instance_ssh_public"
-  description = "public ssh application security group"
-  vpc_id      = var.vpc_id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  tags = merge(module.label.tags, {
-    "Name"     = "${terraform.workspace}-secgrp-ssh-ext"
-    "resource" = "SG/SSH/EXT"
   })
 }
 

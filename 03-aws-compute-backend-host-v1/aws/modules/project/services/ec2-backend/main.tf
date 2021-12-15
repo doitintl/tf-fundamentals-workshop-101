@@ -43,7 +43,7 @@ module "doit_svc_compute_ec2_backend_centos_9" {
   desired_capacity            = var.set_size_desired
   health_check_type           = "EC2"
   wait_for_capacity_timeout   = "5m"
-  associate_public_ip_address = true
+  associate_public_ip_address = false
 
   user_data_base64             = base64encode(local.backend_user_data)
   autoscaling_policies_enabled = false
