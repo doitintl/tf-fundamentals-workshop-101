@@ -200,7 +200,7 @@ You can also create the test environment by creating the corresponding workspace
    
 ## Conclusion
 
-With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of an auto-scaled high-available multi-EC2 backend-host-system. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
+With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of an auto-scaled high-available multi-EC2 backend-host-system (CentOS stream 9). Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
 
 
 ## Links
