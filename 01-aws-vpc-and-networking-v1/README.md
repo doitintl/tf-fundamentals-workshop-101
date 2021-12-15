@@ -133,6 +133,7 @@ The life cycle of our infrastructure will essentially depend on three important 
    $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/prod.tfvars.json ;
+   # if you dont want to approve this step manually, you can add the argument -auto-approve to your apply-command
    ```
 
 3. **DESTROY** Production Environment
@@ -144,6 +145,7 @@ The life cycle of our infrastructure will essentially depend on three important 
    $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/prod.tfvars.json ;
+   # if you dont want to approve this step manually, you can add the argument -auto-approve to your destroy-command
    ```
 
 ## Optional Tasks
