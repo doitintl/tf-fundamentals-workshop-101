@@ -15,10 +15,10 @@ In this full-day workshop we will look at some core mechanisms of Terraform. The
 [root]
   |
   └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/sg resources with local state
-  └ 02-aws-compute                 | 2nd terraform lab, handling ec2 compute resources with local state
-  └ 03-aws-compute-and-scale-v1    | 2nd terraform lab, handling scalable ec2 compute resources with local state
-  └ 04-aws-rds-pgsql-single-zone   | 3rd terraform lab, handling rds/pgsql resources with local state (single-zone)
-  └ 05-aws-rds-pgsql-multi-zone-ha | 4th terraform lab, handling rds/pgsql resources with local state (multi-zone)
+  └ 02-aws-compute-bastion-host-v1 | 2nd terraform lab, handling ec2 compute resources with local state
+  └ 03-aws-compute-backend-host-v1 | 3rd terraform lab, handling scalable ec2 compute resources with local state
+  └ 04-aws-rds-pgsql-single-zone   | 4th terraform lab, handling rds/pgsql resources with local state (single-zone)
+  └ 05-aws-rds-pgsql-multi-zone-ha | 5th terraform lab, handling rds/pgsql resources with local state (multi-zone)
   |--------------------------------|-----------------------------------------------------------------------------------
   └ logs                           | target for upcoming logs (mostly terratest/api-call result related) 
   |--------------------------------|-----------------------------------------------------------------------------------
@@ -28,13 +28,13 @@ In this full-day workshop we will look at some core mechanisms of Terraform. The
 
 ## Available Labs
 
-| Lab/Folder                                                         | Description                                                      |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [01-aws-vpc-and-networking-v1](./01-aws-vpc-and-networking-v1)     | simple aws vpc/networking example using native terraform hcl     |
-| [02-aws-compute-v1](./02-aws-compute-v1)                           | simple ec2 compute example for ubuntu ec2 with user data payload |
-| [03-aws-compute-and-scale-v1](./03-aws-compute-and-scale-v1)       | auto scaling group example for ubuntu ec2 with user data payload |
-| [04-aws-rds-pgsql-single-zone](./04-aws-rds-pgsql-single-zone)     | single zone aws rds example using postgresql                     |
-| [05-aws-rds-pgsql-multi-zone-ha](./05-aws-rds-pgsql-multi-zone-ha) | multi-zone aws rds example using postgresql                      |
+| Lab/Folder                                                         | Description                                                                              |
+| ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| [01-aws-vpc-and-networking-v1](./01-aws-vpc-and-networking-v1)     | simple aws vpc/networking example using native terraform hcl                             |
+| [02-aws-compute-bastion-host-v1](./02-aws-compute-bastion-host-v1) | advanced ec2 compute bastion-host example using ubuntu ec2 with user data payload        |
+| [03-aws-compute-backend-host-v1](./03-aws-compute-backend-host-v1) | auto scaling group example for centos ec2 backend host with additional user data payload |
+| [04-aws-rds-pgsql-single-zone](./04-aws-rds-pgsql-single-zone)     | single zone aws rds example using postgresql                                             |
+| [05-aws-rds-pgsql-multi-zone-ha](./05-aws-rds-pgsql-multi-zone-ha) | multi-zone aws rds example using postgresql                                              |
 
 
 ## Available Terraform Workspaces
@@ -62,7 +62,7 @@ For the use of the local terminal environment for all terraform relevant CLI/API
 - `curl` [installation](https://curl.se/download.html) tutorial
 
 
-## Terminal Preparation
+## Terraform Terminal Preparation
 
 The preparation of your local shell/terminal environment is one of the first steps to handle all of our labs and is the basis for all our further activity using the local development environment of all participants. We will pave the way to our first terraform aws resource deployment step by step in the following section and learning some basics of using terraform providers, configs, outputs and state.
 
@@ -97,14 +97,19 @@ The preparation of your local shell/terminal environment is one of the first ste
    _go to the corresponding labs subdirectory and follow the corresponding instructions in the documentation stored there_ 
 
 
+## Terraform Debugging
+
+Terraform has detailed logs which can be enabled by setting the `TF_LOG` environment variable to any value. This will cause detailed logs to appear on stderr. You can set `TF_LOG` to one of the log levels `TRACE`, `DEBUG`, `INFO`, `WARN` or `ERROR` to change the verbosity of terraform logs.
+
+
 ## Links
 
 - https://www.terraform.io/docs/language/functions/index.html
 - https://www.terraform.io/docs/language/expressions/index.html
 - https://www.terraform.io/docs/language/settings/backends/index.html
-- https://github.com/cloudposse
 - https://gruntwork.io/infrastructure-as-code-library/
-
+- https://github.com/gruntwork-io/cloud-nuke
+- https://github.com/cloudposse
 
 ## License
 

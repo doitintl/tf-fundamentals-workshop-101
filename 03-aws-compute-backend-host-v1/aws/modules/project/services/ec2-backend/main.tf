@@ -15,14 +15,14 @@ module "label" {
   tags       = var.tags
 }
 
-module "doit_svc_compute_ec2_bastion_ubuntu_20_04" {
+module "doit_svc_compute_ec2_backend_centos_7" {
 
   source = "../../../global/services/ec2-asg"
 
   namespace = var.namespace
   stage     = var.stage
 
-  image_id                  = data.aws_ami.ubuntu_linux_20_04.id
+  image_id                  = var.set_instance_ami_id_centos_9
   instance_type             = var.set_instance_type
   security_group_ids        = var.set_security_groups
   subnet_ids                = var.set_subnets_app
@@ -35,7 +35,7 @@ module "doit_svc_compute_ec2_bastion_ubuntu_20_04" {
   wait_for_capacity_timeout   = "5m"
   associate_public_ip_address = true
 
-  user_data_base64             = base64encode(local.bastion_user_data)
+  user_data_base64             = base64encode(local.backend_user_data)
   autoscaling_policies_enabled = false
   protect_from_scale_in        = false
   asg_name_prefix              = var.set_asg_name_prefix
@@ -61,38 +61,21 @@ module "doit_svc_compute_ec2_bastion_ubuntu_20_04" {
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
-# DATA
-# Used to represent any data that requires complex filter mechanics (e.g. find some AMIs)
+# LOCALS
+# Used to represent any data that requires complex expressions/interpolations
 # ---------------------------------------------------------------------------------------------------------------------
 
-data "aws_ami" "ubuntu_linux_20_04" {
-
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"]
-}
-
-
-# https://www.terraform.io/docs/configuration/expressions.html#string-literals
 locals {
-  bastion_user_data = <<-USERDATA
+  backend_user_data = <<-USERDATA
     #!/bin/bash
-    apt-get update && \
-    apt-get upgrade -y && \
-    apt-get dist-upgrade -y && \
-    apt-get -y install mc apt-listchanges unattended-upgrades fail2ban curl wget git apt-transport-https ca-certificates && \
-    apt-get autoremove && \
-    apt-get autoclean && \
-    hostnamectl set-hostname doit-ec2-bastion-${var.set_instance_grp_num}
+    yum update && \
+    yum upgrade -y && \
+    yum -y install mc curl wget git && \
+    yum clean all ;
+    cd /tmp ;
+    yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
+    systemctl enable amazon-ssm-agent
+    systemctl start amazon-ssm-agent
+    hostnamectl set-hostname doit-ec2-backend-${var.set_instance_grp_num}
   USERDATA
 }
