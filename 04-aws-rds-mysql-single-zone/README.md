@@ -209,7 +209,6 @@ With this lab we learned the basics of setting up, planning and provisioning sim
 - https://aws.amazon.com/de/rds/instance-types/
 - https://www.terraform.io/docs/language/state/index.html
 - https://www.terraform.io/docs/language/functions/cidrsubnet.html
-  
 
 
 ## License
