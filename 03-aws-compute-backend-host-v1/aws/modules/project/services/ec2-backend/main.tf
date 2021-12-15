@@ -1,4 +1,14 @@
 # --
+# @entity/id:    random_id
+# @source/doc:   https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id
+# --
+resource "random_id" "ec2_random_hostname_suffix" {
+
+  byte_length = 4
+}
+
+
+# --
 # @entity/id:    core_label (label, global/core/label)
 # @source/doc:   https://github.com/cloudposse/terraform-null-label/blob/master/README.md
 # @source/local: aws/modules/global/network/vpc/main.tf
@@ -73,7 +83,7 @@ locals {
     yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
     systemctl enable amazon-ssm-agent
     systemctl start amazon-ssm-agent
-    hostnamectl set-hostname doit-ec2-backend-${var.set_instance_grp_num}
+    hostnamectl set-hostname doit-ec2-backend-${var.set_instance_grp_num}-${random_id.ec2_random_hostname_suffix.hex}
   USERDATA
 }
 
