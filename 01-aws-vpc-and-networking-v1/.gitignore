@@ -1,0 +1,125 @@
+#
+# terraform, compiled files
+# --
+*.tfstate
+*.tfstate.backup
+.build-harness
+build-harness
+
+#
+# temporary/local terraform variable files
+# --
+*.tfvars
+!tf-test.tfvars
+!tf-prod.tfvars
+.terraform
+tfplan
+terraform.tfstate.d/*
+
+#
+# VSCode project files
+# --
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+#
+# IntelliJ project files
+# --
+
+.idea/*
+out
+gen
+*.iml
+
+#
+# ignore all previously mounted shared sub folders
+# --
+*/share/*
+*/volumes/*
+
+#
+# keep all gitkeep files
+# --
+!**/.gitkeep
+
+#
+# ignore logs and tmp file dumps
+# --
+*.tmp
+*.temp
+*.log
+.DS_Store
+*.txt
+*.bkp
+*.new
+
+#
+# local generated userdata shell scripts
+# --
+userdata*.sh
+
+#
+# local letsencrypt path
+# --
+.letsencrypt
+
+#
+# local archives
+# --
+*.zip
+*.rar
+*.gzip
+*.7z
+*.tar
+
+#
+# golang related stuff
+# --
+# Test binary, built with `go test -c`
+*.test
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+test/cache/*
+test/vendor/*
+test/pkg/*
+*.lock
+
+#
+# makefile related stuff
+# --
+*.sec
+*.token
+
+#
+# experimental / feature lockout
+#
+# -*-
+
+# SSH Keys
+*.pem
+
+# Backup files
+*.bak
+
+# Ignored Terraform files
+*gitignore*.tf
+
+# Ignore Any Generated JSON Files
+operations/automation-script/apply.json
+operations/automation-script/configversion.json
+operations/automation-script/run.template.json
+operations/automation-script/run.json
+operations/automation-script/variable.template.json
+operations/automation-script/variable.json
+operations/automation-script/workspace.template.json
+operations/automation-script/workspace.json
+operations/sentinel-policies-scripts/create-policy.template.json
+operations/sentinel-policies-scripts/create-policy.json
+operations/variable-scripts/variable.template.json
+operations/variable-scripts/variable.json
+
+# Sentinel runtime directory
+.sentinel
