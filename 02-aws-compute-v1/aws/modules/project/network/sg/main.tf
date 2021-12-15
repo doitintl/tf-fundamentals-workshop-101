@@ -93,3 +93,33 @@ resource "aws_security_group" "sec_grp_host_web_app_public" {
   })
 }
 
+# --
+# @entity/id:    aws_security_group/sec_grp_host_allow_icmp_ping_public (public icmp/8/0)
+# @source/doc:   https://www.terraform.io/docs/providers/aws/r/security_group.html
+# @source/local: *
+# --
+resource "aws_security_group" "sec_grp_host_allow_icmp_ping_public" {
+
+  name        = "instance_icmp_ping_public"
+  description = "public icmp ping allowance security group"
+  vpc_id      = var.vpc_id
+
+  ingress {
+    from_port   = 8
+    to_port     = 0
+    protocol    = "icmp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(module.label.tags, {
+    "Name"     = "${terraform.workspace}-secgrp-icmp-8-ext"
+    "resource" = "SG/ICMP/8/EXT"
+  })
+}

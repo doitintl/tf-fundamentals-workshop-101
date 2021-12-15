@@ -27,24 +27,6 @@ module "label" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 #
-# codepipeline core policy statement for all of our pipelines
-#
-# - allow assume role for instance (codepipeline_assume_policy)
-#
-data "aws_iam_policy_document" "codepipeline_policy_doc_primary" {
-
-  statement {
-    sid     = "AllowCPAssumeRole"
-    effect  = "Allow"
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "Service"
-      identifiers = ["codepipeline.amazonaws.com"]
-    }
-  }
-}
-
-#
 # primary policy statement for all of our EC2 instance(s)
 #
 # - allow assume role for instance
@@ -108,7 +90,16 @@ data "aws_iam_policy_document" "ec2_policy_doc_secondary" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 # --
-# @entity/id:    aws_iam_role (ec2, codebuild, code-deploy)
+# @entity/id:    random_id
+# @source/doc:   https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/id
+# --
+resource "random_id" "ec2_default_linked_role" {
+
+  byte_length = 4
+}
+
+# --
+# @entity/id:    aws_iam_role (ec2)
 # @source/doc:   https://www.terraform.io/docs/providers/aws/r/iam_role.html
 # --
 resource "aws_iam_role" "ec2_primary_role" {
@@ -118,7 +109,7 @@ resource "aws_iam_role" "ec2_primary_role" {
 }
 
 # --
-# @entity/id:    aws_iam_role_policy (ec2, codebuild, code-deploy)
+# @entity/id:    aws_iam_role_policy (ec2)
 # @source/doc:   https://www.terraform.io/docs/providers/aws/r/iam_role_policy_attachment.html
 # --
 resource "aws_iam_role_policy" "ec2_primary_role_policy" {
@@ -154,13 +145,6 @@ resource "aws_iam_role_policy_attachment" "ec2_primary_role_policy_ext_ssm_auto"
   }
 }
 
-# @info: add "AmazonEC2ContainerRegistryReadOnly" to primary instance role
-resource "aws_iam_role_policy_attachment" "ec2_primary_role_policy_ext_ecr_ro" {
-
-  role       = aws_iam_role.ec2_primary_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-}
-
 # --
 # @entity/id:    aws_ssm_activation (aws_ssm_activation)
 # @source/doc:   https://www.terraform.io/docs/providers/aws/r/ssm_activation.html
@@ -173,13 +157,8 @@ resource "aws_ssm_activation" "ec2_primary_ssm_activation" {
   registration_limit = 5
 }
 
-resource "random_id" "ec2_default_linked_role" {
-
-  byte_length = 4
-}
-
 # --
-# @entity/id:    iam_instance_profile (elastic_beanstalk_app)
+# @entity/id:    iam_instance_profile
 # @source/doc:   https://www.terraform.io/docs/providers/aws/r/iam_instance_profile.html
 # --
 resource "aws_iam_instance_profile" "ec2_default_profile" {

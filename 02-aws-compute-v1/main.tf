@@ -163,7 +163,8 @@ module "doit_core_ec2_bastion_host_ubuntu_20_04" {
 
   set_iam_instance_profile = module.doit_core_iam.app_ec2_iam_profile
   set_security_groups = [
-    module.doit_core_sec_groups.sec_grp_host_web_app_public
+    module.doit_core_sec_groups.sec_grp_host_web_app_public,
+    module.doit_core_sec_groups.sec_grp_host_allow_icmp_ping_public
   ]
 
   set_subnets_app       = local.vpc_subnet_ids_pub

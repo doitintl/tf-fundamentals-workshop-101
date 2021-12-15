@@ -86,9 +86,13 @@ data "aws_ami" "ubuntu_linux_20_04" {
 # https://www.terraform.io/docs/configuration/expressions.html#string-literals
 locals {
   bastion_user_data = <<-USERDATA
+    #!/bin/bash
     apt-get update && \
     apt-get upgrade -y && \
-    apt-get -y install mc curl wget git apt-transport-https ca-certificates && \
+    apt-get dist-upgrade -y && \
+    apt-get -y install mc apt-listchanges unattended-upgrades fail2ban curl wget git apt-transport-https ca-certificates && \
+    apt-get autoremove && \
+    apt-get autoclean && \
     hostnamectl set-hostname doit-ec2-bastion-${var.set_instance_grp_num}
   USERDATA
 }
