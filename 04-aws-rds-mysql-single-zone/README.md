@@ -203,7 +203,7 @@ With this lab we learned the basics of setting up, planning and provisioning sim
 ## Links
 
 - https://blog.gruntwork.io/a-comprehensive-guide-to-managing-secrets-in-your-terraform-code-1d586955ace1
-  https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance
+- https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance
 - https://registry.terraform.io/modules/terraform-aws-modules/rds/aws/latest
 - https://github.com/cloudposse/terraform-aws-rds
 - https://aws.amazon.com/de/rds/instance-types/
