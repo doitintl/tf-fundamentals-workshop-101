@@ -64,7 +64,7 @@ module "doit_core_vpc" {
     cidrsubnet(local.vpc_cidr, 4, 2), // --'
   ]
 
-  vpc_private_subnets_natgw_enabled = true
+  vpc_private_subnets_natgw_enabled = false
   vpc_private_subnet_tags           = merge(module.core_label.tags, { "Name" = "${module.core_label.stage}-${module.core_label.namespace}-${module.core_label.name}-sn-private", "tf_resource" = "SN_PRIV" })
   vpc_private_subnets = [
     cidrsubnet(local.vpc_cidr, 4, 3), // --| used for private apps
@@ -142,10 +142,10 @@ module "doit_core_ssm" {
 
 # --
 # @info:         1st ec2-backend-instance [001/001]
-# @entity/id:    doit_core_ec2_backend_host_centos_7
+# @entity/id:    doit_core_ec2_backend_host_centos_9
 # @source/local: aws/modules/project/services/ec2-backend
 # --
-module "doit_core_ec2_backend_host_centos_7" {
+module "doit_core_ec2_backend_host_centos_9" {
 
   enabled = true
   source  = "./aws/modules/project/services/ec2-backend"
@@ -164,10 +164,11 @@ module "doit_core_ec2_backend_host_centos_7" {
 
   set_iam_instance_profile = module.doit_core_iam.app_ec2_iam_profile
   set_security_groups = [
-    module.doit_core_sec_groups.sec_grp_host_web_app_public
+    module.doit_core_sec_groups.sec_grp_host_web_app_public,
+    module.doit_core_sec_groups.sec_grp_host_ssh_app_public,
   ]
 
-  set_subnets_app       = local.vpc_subnet_ids_priv
+  set_subnets_app       = local.vpc_subnet_ids_pub
   set_instance_grp_num  = "01"
   set_asg_name_prefix   = "${module.core_label.name}-svc-01-"
 

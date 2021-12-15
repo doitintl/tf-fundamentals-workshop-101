@@ -25,7 +25,7 @@ module "label" {
   tags       = var.tags
 }
 
-module "doit_svc_compute_ec2_backend_centos_7" {
+module "doit_svc_compute_ec2_backend_centos_9" {
 
   source = "../../../global/services/ec2-asg"
 
