@@ -122,8 +122,8 @@ The life cycle of our infrastructure will essentially depend on three important 
    ```bash
    # make sure that you are in the right lab directory
    $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
-   # execute the following command to "plan" your infrastructure (nothing will be provisioned right now)
-   $ echo 'terraform plan' ;
+   # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
+   $ echo 'terraform plan -var-file=env/prod.tfvars.json' ;
    ```
 
 2. **APPLY**
@@ -133,8 +133,8 @@ The life cycle of our infrastructure will essentially depend on three important 
    ```bash
    # make sure that you are in the right lab directory
    $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
-   # execute the following command to "apply" your infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform apply' ;
+   # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
+   $ echo 'terraform apply -var-file=env/prod.tfvars.json' ;
    ```
 
 3. **DESTROY**
@@ -144,13 +144,55 @@ The life cycle of our infrastructure will essentially depend on three important 
    ```bash
    # make sure that you are in the right lab directory
    $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
-   # execute the following command to "destroy" your infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform destroy' ;
+   # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
+   $ echo 'terraform destroy -var-file=env/prod.tfvars.json' ;
    ```
+
+## Optional Tasks
+
+Now that we have rolled out and destroyed a production version of our infrastructure code, we can take a closer look at the two remaining workspaces, `stage` and `test`. To initialise a corresponding workspace within terraform, we first need a suitable workspace, then we roll out the same infrastructure that we have already used in prod to this new environment.
+
+1. **PLAN** Staging Environment
+
+   _Now that all terraform plugins required for the provisioning process have been loaded and the workspace has been initialized, we can begin our initial infrastructure planning._
+
+   ```bash
+   # make sure that you are in the right lab directory
+   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   # init our staging workspace now (this will also activate the workspace immediately)
+   $ echo 'terraform terraform workspace new stage' ;
+   # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
+   $ echo 'terraform plan -var-file=env/stage.tfvars.json' ;
+   ```
+   
+2. **APPLY** Staging Environment
+
+   _The next step will be the actual execution of provisioning. for this we could also use the output of the provisioning plan from step 1, but for simplicity we will go directly into the apply process based on our infrastructure definition._
+
+   ```bash
+   # make sure that you are in the right lab directory
+   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
+   $ echo 'terraform apply -var-file=env/stage.tfvars.json' ;
+   ```
+
+3. **DESTROY** Staging Environment
+
+   _The last step will be the removal of the created resources. All resources defined via the infrastructure definition will be removed completely and without residue from your aws account._
+
+   ```bash
+   # make sure that you are in the right lab directory
+   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
+   $ echo 'terraform destroy -var-file=env/stage.tfvars.json' ;
+   ```
+
+You can also create the test environment by creating the corresponding workspace and referencing the corresponding tfvars.json file while using the terraform-cli. The steps are ultimately the same as those for the staging environment provisioning described above. The only thing to note here is that the resulting AWS resources are no longer to be found on `eu-central-1`, but are rolled out in the cost-effective `east-1` region, as this region has been stored as the target region in the corresponding tfvars.json file. 
+
    
 ## Conclusion
 
-With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of a VPC with 6 subnets and 2 security groups. We will build up the other labs based on this lab and use parts of the approaches and resources explained here in them as well.
+With this lab we learned the basics of `setting up, planning and provisioning simple aws resources using the example of a VPC with 6 subnets and 2 security groups. We will build up the other labs based on this lab and use parts of the approaches and resources explained here in them as well.
 
 
 ## Links
