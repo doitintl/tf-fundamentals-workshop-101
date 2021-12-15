@@ -72,7 +72,8 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    $ # $HOME/
-   $ git clone git@github.com:doitintl/tf-fundamentals-workshop-101.git
+   $ git clone git@github.com:doitintl/tf-fundamentals-workshop-101.git ;
+   $ cd tf-fundamentals-workshop-101 ;
    ```
 
 2. **AWS Credential Configuration**
@@ -90,7 +91,7 @@ The preparation of your local shell/terminal environment is one of the first ste
    $ # $HOME/.aws/credentials
    [tf-ws-user-1001]
    aws_access_key_id = AKIA0000000000000000
-   aws_secret_access_key = abababababababababababababababababababa0
+   aws_secret_access_key = 0000000000000000000000000000000000000001
    ```
 
 3. **INIT/RUN** Lab
