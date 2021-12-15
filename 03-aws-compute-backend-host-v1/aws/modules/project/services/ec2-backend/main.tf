@@ -69,9 +69,6 @@ locals {
   backend_user_data = <<-USERDATA
     #!/bin/bash
     yum update && \
-    yum upgrade -y && \
-    yum -y install mc curl wget git && \
-    yum clean all ;
     cd /tmp ;
     yum install -y https://s3.amazonaws.com/ec2-downloads-windows/SSMAgent/latest/linux_amd64/amazon-ssm-agent.rpm
     systemctl enable amazon-ssm-agent
@@ -79,3 +76,9 @@ locals {
     hostnamectl set-hostname doit-ec2-backend-${var.set_instance_grp_num}
   USERDATA
 }
+
+/*
+    yum upgrade -y && \
+    yum -y install mc curl wget git && \
+    yum clean all ;
+*/
