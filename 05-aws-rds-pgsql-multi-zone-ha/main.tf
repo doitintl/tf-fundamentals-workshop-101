@@ -141,10 +141,10 @@ module "doit_core_ssm" {
 }
 
 # --
-# @entity/id:    doit_core_rds_mysql_private
+# @entity/id:    doit_core_rds_postgresql_private
 # @source/local: aws/modules/project/service/rds/main.tf
 # --
-module "doit_core_rds_mysql_private" {
+module "doit_core_rds_postgresql_private" {
 
   enabled = true
 
@@ -161,8 +161,8 @@ module "doit_core_rds_mysql_private" {
   database_user        = var.rds_db_user
   database_password    = var.rds_db_pwd
   database_port        = var.rds_db_port
-  db_subnet_group_name = var.rds_db_subnet_group_name
   db_parameter_group   = var.rds_db_parameter_group
+  db_subnet_group_name = var.rds_db_subnet_group_name
 
   multi_az            = var.rds_sys_multi_az
   storage_type        = var.rds_sys_storage_type
@@ -176,25 +176,25 @@ module "doit_core_rds_mysql_private" {
   availability_zone   = var.rds_sys_az
 
   security_group_ids = [
-    module.doit_core_sec_groups.sec_grp_host_mysql_private
+    module.doit_core_sec_groups.sec_grp_host_postgresql_private
   ]
 
   db_parameter = [
     {
-      name         = "myisam_sort_buffer_size"
-      value        = "1048576"
+      name         = "autovacuum"
+      value        = 1
       apply_method = "immediate"
     },
     {
-      name         = "sort_buffer_size"
-      value        = "2097152"
+      name         = "client_encoding"
+      value        = "utf8"
       apply_method = "immediate"
     }
   ]
 
   attributes = module.core_label.attributes
   tags = merge(module.core_label.tags, {
-    "tf_resource" = "RDS/DB/MYSQL/INT"
+    "tf_resource" = "RDS/DB/postgresql/INT"
   })
 }
 
