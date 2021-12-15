@@ -1,14 +1,15 @@
-# Terraform Lab-02, EC2 Backend-Host (HA) Example 
+# Terraform Lab-03, 3x EC2 Backend-Hosts (HA) Example 
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
+[![EC2-OS](https://img.shields.io/badge/EC2%20OS-centos9-ff9900.svg)](#)
 
 
 ## Introduction
 
-In this lab, we build a high-available EC2 Backend-Host system based on UBUNTU 20.04 LTS (as part of an 1-1-1 autoscaling group) and a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, two security groups for public and private subnet http/https/ssh-access are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of the respective workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
+In this lab, we build a high-available EC2 Backend-Host system based on the latest CentOS Stream-9 Linux-distribution (as part of a 3-3-3 ha-autoscaling group) and a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, four security groups for public and private subnet icmp/http/https/ssh-access are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
 
 ## Terraform Module-/Repository Structure
 
@@ -107,7 +108,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    # jump into this lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # prepare terraform (e.g. all required plugins will downloaded, state will be prepared)
    $ terraform init ;
    # init our production workspace now (this will also activate the workspace immediately)
@@ -126,7 +127,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
    $ terraform plan -var-file=env/prod.tfvars.json ;
    ```
@@ -137,7 +138,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your apply-command
@@ -149,7 +150,7 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/prod.tfvars.json ;
    # if you dont want to approve this step manually, you can add the argument -auto-approve to your destroy-command
@@ -165,7 +166,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # init our staging workspace now (this will also activate the workspace immediately)
    $ terraform workspace new stage ;
    # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
@@ -178,7 +179,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
    $ terraform apply -var-file=env/stage.tfvars.json ;
    ```
@@ -189,7 +190,7 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ cd <root-repo-path>/02-aws-compute-v1 ;
+   $ cd <root-repo-path>/03-aws-compute-backend-host-v1 ;
    # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
    $ terraform destroy -var-file=env/stage.tfvars.json ;
    ```
@@ -199,7 +200,7 @@ You can also create the test environment by creating the corresponding workspace
    
 ## Conclusion
 
-With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of an auto-scaled high-available EC2 backend-host. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
+With this lab we learned the basics of setting up, planning and provisioning simple aws resources using the example of an auto-scaled high-available multi-EC2 backend-host-system. Normally, for all environments listed here (`prod`, `stage` and `test`), alternating AWS accounts and more extensive variable defaults are used to achieve a clear separation of the respective resource groups. In the present lab, we have agreed on a single-account approach for the sake of simplicity.
 
 
 ## Links
