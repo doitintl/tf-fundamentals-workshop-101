@@ -59,7 +59,9 @@ terraform.rc
 
 # ignore feature related files
 # --
+/dump/
 
 # ignore local key, json-config & -cache files (make some exceptions)
 **/*.jqc
 **/*.key
+

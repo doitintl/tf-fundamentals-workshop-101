@@ -15,9 +15,10 @@ In this full-day workshop we will look at some core mechanisms of Terraform. The
 [root]
   |
   └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/sg resources with local state
-  └ 02-aws-compute-and-scale-v1    | 2nd terraform lab, handling compute resources with local state
-  └ 03-aws-rds-pgsql-single-zone   | 3rd terraform lab, handling rds/pgsql resources with local state (single-zone)
-  └ 04-aws-rds-pgsql-multi-zone-ha | 4th terraform lab, handling rds/pgsql resources with local state (multi-zone)
+  └ 02-aws-compute                 | 2nd terraform lab, handling ec2 compute resources with local state
+  └ 03-aws-compute-and-scale-v1    | 2nd terraform lab, handling scalable ec2 compute resources with local state
+  └ 04-aws-rds-pgsql-single-zone   | 3rd terraform lab, handling rds/pgsql resources with local state (single-zone)
+  └ 05-aws-rds-pgsql-multi-zone-ha | 4th terraform lab, handling rds/pgsql resources with local state (multi-zone)
   |--------------------------------|-----------------------------------------------------------------------------------
   └ logs                           | target for upcoming logs (mostly terratest/api-call result related) 
   |--------------------------------|-----------------------------------------------------------------------------------
@@ -30,9 +31,10 @@ In this full-day workshop we will look at some core mechanisms of Terraform. The
 | Lab/Folder                                                         | Description                                                      |
 | ------------------------------------------------------------------ | ---------------------------------------------------------------- |
 | [01-aws-vpc-and-networking-v1](./01-aws-vpc-and-networking-v1)     | simple aws vpc/networking example using native terraform hcl     |
-| [02-aws-compute-and-scale-v1](./02-aws-compute-and-scale-v1)       | auto scaling group example for ubuntu ec2 with user data payload |
-| [03-aws-rds-pgsql-single-zone](./03-aws-rds-pgsql-single-zone)     | single zone aws rds example using postgresql                     |
-| [04-aws-rds-pgsql-multi-zone-ha](./04-aws-rds-pgsql-multi-zone-ha) | multi-zone aws rds example using postgresql                      |
+| [02-aws-compute-v1](./02-aws-compute-v1)                           | simple ec2 compute example for ubuntu ec2 with user data payload |
+| [03-aws-compute-and-scale-v1](./03-aws-compute-and-scale-v1)       | auto scaling group example for ubuntu ec2 with user data payload |
+| [04-aws-rds-pgsql-single-zone](./04-aws-rds-pgsql-single-zone)     | single zone aws rds example using postgresql                     |
+| [05-aws-rds-pgsql-multi-zone-ha](./05-aws-rds-pgsql-multi-zone-ha) | multi-zone aws rds example using postgresql                      |
 
 
 ## Available Terraform Workspaces

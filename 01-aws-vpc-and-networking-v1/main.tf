@@ -126,7 +126,7 @@ module "doit_core_ssm" {
 
 locals {
 
-  // @info: use dedicated cidr for local/sandbox 'test' environments you can use remote-state based config also
+  // @info: use dedicated CIDR for local/sandbox 'test' environments you can use remote-state based config also
   vpc_cidr            = local.vpc_cidr_app[terraform.workspace]
   vpc_id              = module.doit_core_vpc.default_vpc_id
   vpc_subnet_ids_priv = module.doit_core_vpc.private_subnets

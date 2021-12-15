@@ -11,38 +11,36 @@
 In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, two security groups are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of the respective workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
 
 ## Terraform Module-/Repository Structure
-
-``` 
+```
 [aws]
-  |
-  └ modules                 | primary module definitons
-  |   └ global              | [global/] modules (could also be handled as GIT-SubModules)
-  |   |   └ core            | - [global/core] modules (helper modules) 
-  |   |   |   └ label       | - [global/core/label] primary label module logic 
-  |   |   └ network         | [global/network] modules
-  |   |   |   └ vpc         | [global/network/vpc] helper module
-  |   |   └ services        | [global/service] modules (sg, iam, ssm etc) - currently not used
-  |   |                     |
-  |   └ project             | [project/] modules
-  |   |   └ network         | [project/network] project related network modules
-  |   |   |   └ sg          | - [project/network/security-groups] example definition
-  |   |   └ services        | - [project/network/service] related service modules
-  |   |   |   └ ssm         | - [project/network/service/ssm] project example module
-  |   |   |                 |
-  |---+---+-----------------|-----------------------------------------------------------------------------------
-  └ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc) 
-  |-------------------------|-----------------------------------------------------------------------------------
-  |                         |
+|
+└ modules                 | primary module definitons
+|   └ global              | [global/] modules (could also be handled as GIT-SubModules)
+|   |   └ core            | [global/core] modules (helper modules)
+|   |   |   └ label       | [global/core/label] primary label module logic
+|   |   └ network         | [global/network] modules
+|   |   |   └ vpc         | [global/network/vpc] vpc/routing helper module
+|   |                     |
+|   └ project             | [project/] modules
+|   |   └ network         | [project/network] project related network modules
+|   |   |   └ sg          | [project/network/security-groups] security group related code
+|   |   └ services        | [project/service] related service modules
+|   |   |   └ ssm         | [project/service/ssm] ssm parameter module
+|   |   |                 |
+|---+---+-----------------|-----------------------------------------------------------------------------------
+└ payload                 | possible payload data for upcoming application stacks (e.g. user-data scripts etc)
+|-------------------------|-----------------------------------------------------------------------------------
+|                         |
 [meta]                      | meta directory (used for docs, media files and local helper scripta)
-  |                         |
-  └ doc                     | [meta/doc] documentation sub-directory
-  |   └ pdf                 | - [meta/doc/pdf] directory
-  |   └ scm                 | - [meta/doc/scm] directory
-  |       └ media           | - [meta/doc/scm/media] markdown screenshots directory
-  |                         |
-  └ script                  | - [meta/script] local script-/tool-directory
-  |                         |
-  |-------------------------|-----------------------------------------------------------------------------------
+|                         |
+└ doc                     | [meta/doc] documentation sub-directory
+|   └ pdf                 | [meta/doc/pdf] directory
+|   └ scm                 | [meta/doc/scm] directory
+|       └ media           | [meta/doc/scm/media] markdown screenshots directory
+|                         |
+└ script                  | [meta/script] local script-/tool-directory
+|                         |
+|-------------------------|-----------------------------------------------------------------------------------
 ```
 
 
@@ -102,13 +100,13 @@ The preparation of your local shell/terminal environment is one of the first ste
 
    ```bash
    # jump into this lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # prepare terraform (e.g. all required plugins will downloaded, state will be prepared)
-   $ echo 'terraform init' ;
+   $ terraform init ;
    # init our production workspace now (this will also activate the workspace immediately)
-   $ echo 'terraform terraform workspace new prod' ;
+   $ terraform workspace new prod ;
    # check your current workspace (you will see a small star in front of the prod workspace marking it as active)
-   $ echo 'terraform terraform workspace list' ;
+   $ terraform workspace list ;
    ```
 
 ## Terraform Lab Provisioning Process
@@ -121,9 +119,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "plan" your production infrastructure (nothing will be provisioned right now)
-   $ echo 'terraform plan -var-file=env/prod.tfvars.json' ;
+   $ terraform plan -var-file=env/prod.tfvars.json ;
    ```
 
 2. **APPLY** Production Environment
@@ -132,9 +130,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "apply" your production infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform apply -var-file=env/prod.tfvars.json' ;
+   $ terraform apply -var-file=env/prod.tfvars.json ;
    ```
 
 3. **DESTROY** Production Environment
@@ -143,9 +141,9 @@ The life cycle of our infrastructure will essentially depend on three important 
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "destroy" your production infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform destroy -var-file=env/prod.tfvars.json' ;
+   $ terraform destroy -var-file=env/prod.tfvars.json ;
    ```
 
 ## Optional Tasks
@@ -158,11 +156,11 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # init our staging workspace now (this will also activate the workspace immediately)
-   $ echo 'terraform terraform workspace new stage' ;
+   $ terraform workspace new stage ;
    # execute the following command to "plan" your infrastructure at stage (nothing will be provisioned right now)
-   $ echo 'terraform plan -var-file=env/stage.tfvars.json' ;
+   $ terraform plan -var-file=env/stage.tfvars.json ;
    ```
    
 2. **APPLY** Staging Environment
@@ -171,9 +169,9 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "apply" your staging infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform apply -var-file=env/stage.tfvars.json' ;
+   $ terraform apply -var-file=env/stage.tfvars.json ;
    ```
 
 3. **DESTROY** Staging Environment
@@ -182,9 +180,9 @@ Now that we have rolled out and destroyed a production version of our infrastruc
 
    ```bash
    # make sure that you are in the right lab directory
-   $ echo 'cd <root-repo-path>/01-aws-vpc-and-networking-v1' ;
+   $ cd <root-repo-path>/01-aws-vpc-and-networking-v1 ;
    # execute the following command to "destroy" your staging infrastructure (you have to approve the step afterwards)
-   $ echo 'terraform destroy -var-file=env/stage.tfvars.json' ;
+   $ terraform destroy -var-file=env/stage.tfvars.json ;
    ```
 
 You can also create the test environment by creating the corresponding workspace and referencing the corresponding tfvars.json file while using the terraform-cli. The steps are ultimately the same as those for the staging environment provisioning described above. The only thing to note here is that the resulting AWS resources are no longer to be found on `eu-central-1`, but are rolled out in the cost-effective `east-1` region, as this region has been stored as the target region in the corresponding tfvars.json file. 
