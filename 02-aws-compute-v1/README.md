@@ -1,4 +1,4 @@
-# Terraform Lab-02, EC2 Compute Resource (Bastion-Host) ASG-Example 
+# Terraform Lab-02, EC2 Bastion-Host (HA) Example 
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
