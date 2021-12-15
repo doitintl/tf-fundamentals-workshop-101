@@ -37,11 +37,11 @@ In this full-day workshop we will look at some core mechanisms of Terraform. The
 
 ## Available Terraform Workspaces
 
-| Workspace | Description       | CIDR            | CIDR-priv-subnets   | CIDR-public-subnets | region       |
-| --------- | ----------------- | --------------- | ------------------- | ------------------- | ------------ |
-| `prod`    | primary workspace | `10.96.0.0/20`  | `10.96.3-5.0/24`    | `10.96.0-2.0/24`    | eu-central-1 |
-| `stage`   | staging workspace | `10.96.16.0/20` | `10.96.19-21.0/24`  | `10.96.16-17.0/24`  | eu-central-1 |
-| `test`    | testing workspace | `10.96.32.0/20` | `10.96.35-37.0/24`  | `10.96.32-34.0/24`  | us-east-1    |
+| Workspace | Description       | CIDR            | region       |
+| --------- | ----------------- | --------------- | ------------ |
+| `prod`    | primary workspace | `10.96.0.0/20`  | eu-central-1 |
+| `stage`   | staging workspace | `10.96.16.0/20` | eu-central-1 |
+| `test`    | testing workspace | `10.96.32.0/20` | us-east-1    |
 
 
 ## Core Requirements

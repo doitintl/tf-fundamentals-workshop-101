@@ -45,6 +45,7 @@ In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3
   |-------------------------|-----------------------------------------------------------------------------------
 ```
 
+
 ## Terraform Workspaces Used
 
 | Workspace | Description       | CIDR            | CIDR-priv-subnets   | CIDR-public-subnets | region       |
