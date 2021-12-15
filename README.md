@@ -15,11 +15,11 @@ In this full-day workshop we will look at some core mechanisms of Terraform. Thi
 ``` 
 [root]
   |
-  └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/sg resources with local state
+  └ 01-aws-vpc-and-networking-v1   | 1st terraform lab, handling vpc/sn/ssm/sg resources with local state
   └ 02-aws-compute-bastion-host-v1 | 2nd terraform lab, handling ec2 compute resources with local state
   └ 03-aws-compute-backend-host-v1 | 3rd terraform lab, handling scalable ec2 compute resources with local state
-  └ 04-aws-rds-mysql-single-zone   | 4th terraform lab, handling rds/mysql resources with local state (single-zone)
-  └ 05-aws-rds-pgsql-multi-zone-ha | 5th terraform lab, handling rds/pgsql resources with local state (multi-zone)
+  └ 04-aws-rds-mysql57-single-zone | 4th terraform lab, handling rds/mysql resources with local state (single-zone)
+  └ 05-aws-rds-pgsql11-multi-zone  | 5th terraform lab, handling rds/pgsql resources with local state (multi-zone)
   |--------------------------------|-----------------------------------------------------------------------------------
   └ logs                           | target for upcoming logs (mostly terratest/api-call result related) 
   |--------------------------------|-----------------------------------------------------------------------------------
