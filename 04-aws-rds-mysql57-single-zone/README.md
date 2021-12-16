@@ -1,7 +1,7 @@
 # Terraform Lab-04, AWS RDS MySQL Single-Zone Example
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
+[![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.1-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
 
@@ -27,7 +27,6 @@ In this lab, we build a simple RDS MySQL 5.7.17 internal database system and a s
   |   |   |   └ sg          | [project/network/security-groups] security group related code
   |   |   └ services        | [project/service] related service modules
   |   |   |   └ ssm         | [project/service/ssm] ssm parameter module
-  |   |   |   └ iam         | [project/service/iam] iam module for handling ec2/rds related configuration
   |   |   |   └ rds         | [project/service/rds] our rds resource stack definition module
   |   |   |                 |
   |---+---+-----------------|-----------------------------------------------------------------------------------
@@ -64,8 +63,6 @@ In this lab, we build a simple RDS MySQL 5.7.17 internal database system and a s
 | VPC                 | [terraform-aws-vpc](https://github.com/terraform-aws-modules/terraform-aws-vpc) | [link](./aws/modules/global/network/vpc) |
 | SecurityGroup       | [terraform-aws-security-group](https://www.terraform.io/docs/providers/aws/r/security_group.html) | [link](./aws/modules/project/network/sg) |
 | SSM-Parameter       | [terraform-aws-ssm-parameter](https://www.terraform.io/docs/providers/aws/r/ssm_parameter.html) | [link](./aws/modules/project/services/ssm) |
-| IAM-Roles/Policies  | [terraform-aws-iam-role](https://www.terraform.io/docs/providers/aws/r/iam_role.html) | [link](./aws/modules/project/services/iam) |
-| AutoScalingGroup    | [terraform-aws-autoscaling-group](https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html) | [link](./aws/modules/global/services/ec2-asg) |
 
 
 ## Core Requirements
@@ -83,18 +80,18 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 1. **AWS Credential Configuration**
 
-   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `./env/<workspace>.tfvars.json`. Below you can find an example for the user `1001` with the profile `tf-ws-user-1001`._
+   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `./env/<workspace>.tfvars.json`. Below you can find an example for the use of an aws-profile named `terraform`._
 
    ```ini
    $ # $HOME/.aws/config
-   [tf-ws-user-1001]
+   [terraform]
    region = eu-central-1
    output = json
    ```
 
    ```ini
    $ # $HOME/.aws/credentials
-   [tf-ws-user-1001]
+   [terraform]
    aws_access_key_id = AKIA0000000000000000
    aws_secret_access_key = abababababababababababababababababababa0
    ```
