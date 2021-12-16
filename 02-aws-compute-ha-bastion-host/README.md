@@ -1,7 +1,7 @@
 # Terraform Lab-02, AWS EC2 Bastion-Host (HA) Example 
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.0-0098B7.svg)](#)
+[![Lab-Version](https://img.shields.io/badge/Lab%20version-1.0.1-0098B7.svg)](#)
 [![Terraform/Core Version](https://img.shields.io/badge/TF%20version-1.0.11-844fba.svg)](#)
 [![AWS CLI/SDK Version](https://img.shields.io/badge/awscli%20version-2.0.27-ff9900.svg)](#)
 [![EC2-OS](https://img.shields.io/badge/EC2%20OS-ubuntu2004-ff9900.svg)](#)
@@ -86,18 +86,18 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 1. **AWS Credential Configuration**
 
-   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `./env/<workspace>.tfvars.json`. Below you can find an example for the user `1001` with the profile `tf-ws-user-1001`._
+   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `./env/<workspace>.tfvars.json`. Below you can find an example for the use of an aws-profile named `terraform`._
 
    ```ini
    $ # $HOME/.aws/config
-   [tf-ws-user-1001]
+   [terraform]
    region = eu-central-1
    output = json
    ```
 
    ```ini
    $ # $HOME/.aws/credentials
-   [tf-ws-user-1001]
+   [terraform]
    aws_access_key_id = AKIA0000000000000000
    aws_secret_access_key = 0000000000000000000000000000000000000001 
    ```
