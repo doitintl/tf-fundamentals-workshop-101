@@ -72,8 +72,8 @@ The preparation of your local shell/terminal environment is one of the first ste
    _Please make sure that work with the latest main-branch version of our labs-repository._
 
    ```bash
-   $ # $HOME/
-   $ git clone git@github.com:doitintl/tf-fundamentals-workshop-101.git ;
+   $ # sudo mkdir -p /opt/workshop ; cd /opt/workshop
+   $ git clone https://github.com/doitintl/tf-fundamentals-workshop-101.git 
    $ cd tf-fundamentals-workshop-101 ;
    ```
 
