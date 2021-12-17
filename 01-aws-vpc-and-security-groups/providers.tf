@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 # PROVIDER
 # provider configuration
-# https://www.terraform.io/docs/providers/aws/guides/version-2-upgrade.html
+# https://www.terraform.io/language/providers/configuration
 # ---------------------------------------------------------------------------------------------------------------------
 
 provider "aws" {
