@@ -69,7 +69,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 1. **Clone Repository**
 
-   _Please make sure that work with the latest main-branch version of our labs-repository._
+   Please make sure that work with the latest main-branch version of our labs-repository. If there are changes to the kernel repository during the workshop, you can save the current local change state with `git stash` and get the new state with `git pull`.
 
    ```bash
    $ # sudo mkdir -p /opt/workshop ; cd /opt/workshop
@@ -79,7 +79,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 2. **AWS Credential Configuration**
 
-   _Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `<lab-path>/env/<workspace>.tfvars.json`. Below you can find an _example_ for an aws-profile named `terraform`._
+   Please make sure that there is an appropriate aws profile in your aws-cli/sdk configuration, which must be stored in the respective `<lab-path>/env/<workspace>.tfvars.json`. Below you can find an _example_ for an aws-profile named `terraform`.
 
    ```ini
    $ # $HOME/.aws/config
@@ -95,8 +95,18 @@ The preparation of your local shell/terminal environment is one of the first ste
    aws_secret_access_key = 0000000000000000000000000000000000000000
    ```
 
-3. **INIT/RUN** Lab
-   _go to the corresponding labs subdirectory and follow the corresponding instructions in the documentation stored there_ 
+3. **Terraform Installation**
+
+   Make sure you have installed the terraform-setup tool [tfswitch](https://tfswitch.warrensbox.com/Install/) and select the version supported by our labs `1.0.11`.
+
+   ```bash
+   $ curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | sudo bash 
+   $ tfswitch
+   ```
+
+4. **INIT/RUN** Lab
+
+   _Go to the corresponding labs sub-directory and follow the corresponding instructions in the documentation stored there!s_
 
 
 ## Terraform Debugging
