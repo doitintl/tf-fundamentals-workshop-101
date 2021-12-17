@@ -97,7 +97,7 @@ The preparation of your local shell/terminal environment is one of the first ste
 
 3. **Terraform Installation**
 
-   Make sure you have installed the terraform-setup tool [tfswitch](https://tfswitch.warrensbox.com/Install/) and select the version supported by our labs `1.0.11`.
+   Make sure you have installed the terraform-setup tool [tfswitch](https://tfswitch.warrensbox.com/Install/) and select the version supported by our labs `1.0.11`. You can of course also install Terraform manually, just follow the [official](https://learn.hashicorp.com/tutorials/terraform/install-cli) instructions of the vendor.
 
    ```bash
    $ curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | sudo bash 
