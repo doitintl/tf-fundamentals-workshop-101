@@ -57,7 +57,7 @@ module "doit_core_vpc" {
   vpc_azs  = data.aws_availability_zones.available.names
   vpc_cidr = local.vpc_cidr
 
-  vpc_private_subnets_natgw_enabled = true
+  vpc_private_subnets_natgw_enabled = false
   vpc_private_subnet_tags           = merge(module.core_label.tags, { "Name" = "${module.core_label.stage}-${module.core_label.namespace}-${module.core_label.name}-sn-private", "tf_resource" = "SN_PRIV" })
   vpc_private_subnets = [
     cidrsubnet(local.vpc_cidr, 4, 0), // --| used for private apps
