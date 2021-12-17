@@ -63,14 +63,6 @@ module "doit_core_vpc" {
     cidrsubnet(local.vpc_cidr, 4, 1), // --|-----------------------'
     cidrsubnet(local.vpc_cidr, 4, 2), // --'
   ]
-
-  vpc_private_subnets_natgw_enabled = false
-  vpc_private_subnet_tags           = merge(module.core_label.tags, { "Name" = "${module.core_label.stage}-${module.core_label.namespace}-${module.core_label.name}-sn-private", "tf_resource" = "SN_PRIV" })
-  vpc_private_subnets = [
-    cidrsubnet(local.vpc_cidr, 4, 3), // --| used for private apps
-    cidrsubnet(local.vpc_cidr, 4, 4), // --|----------------------'
-    cidrsubnet(local.vpc_cidr, 4, 5), // --'
-  ]
 }
 
 # --
@@ -163,7 +155,7 @@ module "doit_core_ec2_bastion_host_ubuntu_20_04" {
 
   set_iam_instance_profile = module.doit_core_iam.app_ec2_iam_profile
   set_security_groups = [
-    module.doit_core_sec_groups.sec_grp_host_web_app_public,
+    module.doit_core_sec_groups.sec_grp_host_ssh_app_public,
     module.doit_core_sec_groups.sec_grp_host_allow_icmp_ping_public,
   ]
 
