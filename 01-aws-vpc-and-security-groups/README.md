@@ -8,7 +8,7 @@
 
 ## Introduction
 
-In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs. In addition, two security groups are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
+In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3 private and 3 public subnets in the respective available AZs at `eu-central-1`. In addition, two security groups are created and some parameters are stored in the AWS SSM-K/V store. Three workspaces can be used for this lab; the listing of our usable workspaces can be found in the respective section in this documentation. For this lab, we will only store a local state of the infrastructure - this is not recommended for production use! We will go into more detail about the possibilities of remote state handling in the following examples.
 
 ## Terraform Module-/Repository Structure
 ```
@@ -45,9 +45,12 @@ In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3
 
 ## AWS Architecture Build
 
-The following overview shows the planned infrastructure of our aws project. Due to simplification, a complete presentation of all resources involved (e.g. security groups and SSM) has been omitted.
+| AWS Setup |
+|:-------------------------:|
+|![aws project structure](./meta/doc/scm/media/schema_v1.png) |
 
-![aws project structure](./meta/doc/scm/media/schema_v1.png)
+This schema shows the planned infrastructure of our AWS-Project. Due to simplification, a complete presentation of all resources (e.g., security groups & SSM) and possible workspaces (stage, test) involved has been omitted.
+
 
 ## Terraform Workspaces Used
 
@@ -55,7 +58,7 @@ The following overview shows the planned infrastructure of our aws project. Due 
 | --------- | ----------------- | --------------- | ------------------- | ------------------- | ------------ |
 | `prod`    | primary workspace | `10.96.0.0/20`  | `10.96.3-5.0/24`    | `10.96.0-2.0/24`    | eu-central-1 |
 | `stage`   | staging workspace | `10.96.16.0/20` | `10.96.19-21.0/24`  | `10.96.16-17.0/24`  | eu-central-1 |
-| `test`    | testing workspace | `10.96.32.0/20` | `10.96.35-37.0/24`  | `10.96.32-34.0/24`  | us-east-1    |
+| `test`    | testing workspace | `10.96.32.0/20` | `10.96.35-37.0/24`  | `10.96.32-34.0/24`  | eu-central-1 |
 
 
 ## AWS Resources Used
