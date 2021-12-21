@@ -47,7 +47,7 @@ In this lab, we build a simple 3-by-3 (_full-region_) VPC in AWS consisting of 3
 
 The following overview shows the planned infrastructure of our aws project. Due to simplification, a complete presentation of all resources involved (e.g. security groups and SSM) has been omitted.
 
-![aws project structure](./meta/doc/scm/media/schema_v1.svg)
+![aws project structure](./meta/doc/scm/media/schema_v1.png)
 
 ## Terraform Workspaces Used
 
